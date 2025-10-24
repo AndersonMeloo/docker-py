@@ -3,6 +3,17 @@ services:
     build: .
     ports:
       - "8000:5000"
-
+    restart:
+      always
+      # - no: nunca reinicia
+      # - always: sempre reinicia (mesmo manual)
+      # - unless-stopped: reinicia se cair, exceto se parado manualmente
+      # - on-failure:3 → reinicia até 3 vezes em caso de erro  redis:
+    depends_on:
+      - redis #depends_on: [redis] → Faz o container 'web' só iniciar depois que o 'redis' for iniciado.
   redis:
     image: "redis"
+    restart: unless-stopped
+
+  # unless-stopped - Servidor bugou Reinicia
+  # on-failure:3 - Ou o valor decidido
